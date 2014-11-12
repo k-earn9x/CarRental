@@ -9,58 +9,100 @@
     <meta name="viewport" content="width=device-width" />
     @*<link href="~/Content/style.css" rel="stylesheet" />*@
     <title>DangNhap</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Login","DangNhap", "DangNhap")*@
 
-        <div>
-            @if (Session["Accout"] != null)
-            {
-                Session["Account"] = @Html.Encode(User.Identity.Name);
-                <div>THÀNH VIÊN</div>
-                <div>
-
-                    <p align="center" style="color:#FF0000"><b>  <strong>Xin chào @Html.Encode(User.Identity.Name)</strong> </b><br /></p>
-
-
-                    <div style=" width:50px; float:left; text-align: left;">&nbsp;<br /></div>
-                    @using (Html.BeginForm("LogOff", "DangNhap"))
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("Dash Board", "Index", "DashBoard")</li>*@
+                    @if (Session["Account"] != null)
                     {
-                        <div><input type="button" style="text-align:center" name="dangxuat" value="Đăng xuất" onclick="goToLogOut();" /></div>
+
+                        <li>@Html.ActionLink("Dash Board", "Index", "DashBoard")</li>
+                        <li>@Html.ActionLink("Car Brand", "Index", "CarBrands")</li>
+                        <li>@Html.ActionLink("Car Model", "Index", "CarModels")</li>
+                        <li>@Html.ActionLink("City", "Index", "Cities")</li>
+                        <li>@Html.ActionLink("Review", "Index", "Reviews")</li>
+                        <li>@Html.ActionLink("Request", "Index", "Requests")</li>
+                        <li>@Html.ActionLink("User", "Index", "Users")</li>
+                        @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
+                        <li><span style="color:#d8d2d2; align-items:flex-end">@Html.ActionLink("Log Out", "LogOff", "DangNhap")</span></li>
                     }
-                    <div><p align="center"><a href="/User/EditUser">Sửa thông tin cá nhân</a></p> </div>
+                    
 
-                </div>
-            }
-            else
-            {
-                <div><p align="center" style="color:red;">ĐĂNG NHẬP</p></div>
-                <div>
-                    @using (Html.BeginForm("DangNhap", "DangNhap", FormMethod.Post, new { id = "Formdn", name = "Formdn", onSubmit = "return CheckDangNhap();" }))
-                    {
-                        <div style="padding: 0px 0px 0px 665px;">
-                            <div style=" width:100px; float:left; text-align: left;">Tên truy nhập&nbsp;</div>
-                            <input type="text" name="username" id="username" size="10" maxlength="35" onchange="CheckTendn();" />
-
-                            <br />
-                            <div style=" width:100px; float:left; text-align: left;">Mật khẩu&nbsp;</div>
-                            <input type="password" name="txtpass" id="txtpass" size="10" value="" /><br />
-                            <div style=" width:100px; float:left; text-align: left;">Ghi nhớ&nbsp;</div>
-                            <input id="remember" class="checkbox" type="checkbox" checked="checked" value="1" name="remember" /><br />
-                            <span id="tendn" style="color:#FF0000"></span>
-
-                            <div style=" width:100px; float:left; text-align: left;">&nbsp;<br /></div>
-                            <input type="submit" style="align-items:center; text-align: center" value="Đăng nhập" />
-                        </div>
-                        <div><p align="center"><a href="">@ViewBag.ThongBao</a></p> </div>
-                        <div><p align="center" style="color:blue;"><a href="/DangNhap/ForgotPassword">Quên mật khẩu</a></p> </div>
-                        <div><p align="center" style="color:blue;"> <a href="/DangNhap/FormRegister">Đăng kí thành viên</a></p></div>
-                    }
-
-                </div>
-            }
+                </ul>
+            </div>
         </div>
     </div>
 
+    <div class="container body-content">
+        <div>
+
+            <div>
+                @if (Session["Accout"] != null)
+                {
+                    Session["Account"] = @Html.Encode(User.Identity.Name);
+                    <div>THÀNH VIÊN</div>
+                    <div>
+
+                        <p align="center" style="color:#FF0000"><b>  <strong>Xin chào @Html.Encode(User.Identity.Name)</strong> </b><br /></p>
+
+
+                        <div style=" width:50px; float:left; text-align: left;">&nbsp;<br /></div>
+                        @using (Html.BeginForm("LogOff", "DangNhap"))
+                        {
+                            <div><input type="button" style="text-align:center" name="dangxuat" value="Đăng xuất" onclick="goToLogOut();" /></div>
+                        }
+                        <div><p align="center"><a href="/User/EditUser">Sửa thông tin cá nhân</a></p> </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div><p align="center" style="color:red;">LOG IN</p></div>
+                    <div>
+                        @using (Html.BeginForm("DangNhap", "DangNhap", FormMethod.Post, new { id = "Formdn", name = "Formdn", onSubmit = "return CheckDangNhap();" }))
+                        {
+                            <div style="padding: 0px 0px 0px 465px;">
+                                <div style=" width:100px; float:left; text-align: left;">Username&nbsp;</div>
+                                <input type="text" name="username" id="username" size="10" maxlength="35" onchange="CheckTendn();" />
+
+                                <br />
+                                <div style=" width:100px; float:left; text-align: left;">Password&nbsp;</div>
+                                <input type="password" name="txtpass" id="txtpass" size="10" value="" /><br />
+                                <div style=" width:100px; float:left; text-align: left;">Remember&nbsp;</div>
+                                <input id="remember" class="checkbox" type="checkbox" checked="checked" value="1" name="remember" /><br />
+                                <span id="tendn" style="color:#FF0000"></span>
+
+                                <div style=" width:100px; float:left; text-align: left;">&nbsp;<br /></div>
+                                <input type="submit" style="align-items:center; text-align: center" value="Login" />
+                            </div>
+                            <div><p align="center"><a href="">@ViewBag.ThongBao</a></p> </div>
+                             <div><hr color="336699" size="1" /></div>
+                            <div><p align="center" style="color:blue;"><a href="/DangNhap/ForgotPassword">Forgot Password</a></p> </div>
+                            
+                        }
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@RenderSection("scripts", required: false)*@
 </body>
 </html>

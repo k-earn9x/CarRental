@@ -89,25 +89,34 @@ namespace CarRentalWebService.Controllers
         public ActionResult ForgotPassword(FormCollection f)
         {
             string Email = f["email"];
-
-            //KhachHang usr = db.KhachHangs.SingleOrDefault(u => u.Email == Email);
-            var usr = (from kh in db.Users where (kh.email == Email) select kh).ToList();
-            string pwd = "";
-            string usrname = "";
-            string chuoi = "";
-            foreach (User k in usr)
+            try
             {
-                pwd = k.password;
-                usrname = k.userName;
+                var usr = (from kh in db.Users where (kh.email == Email) select kh).ToList();
+                string pwd = "";
+                string usrname = "";
+                string chuoi = "";
+                foreach (User k in usr)
+                {
+                    pwd = k.password;
+                    usrname = k.userName;
+                }
+
+                chuoi += "Tên đăng nhập:" + usrname + " ";
+                chuoi += "\n Mật khẩu: " + pwd + " ";
+
+                string mail = "Chào Email: " + Email + chuoi;
+                SendEmail(Email, "Books Shop", mail);
+
+                return RedirectToAction("DangNhap", "DangNhap");
             }
-
-            chuoi += "Tên đăng nhập:" + usrname + " ";
-            chuoi += "\n Mật khẩu: " + pwd + " ";
-
-            string mail = "Chào Email: " + Email + chuoi;
-            SendEmail(Email, "Books Shop", mail);
-
-            return RedirectToAction("DangNhap", "DangNhap");
+            catch
+            {
+                
+                ViewBag.Error = "<script language=javascript>alert('Nhập lại mật khẩu');</script>";
+                return RedirectToAction("ForgotPassword", "DangNhap");
+            }
+            //KhachHang usr = db.KhachHangs.SingleOrDefault(u => u.Email == Email);
+           
         }
         public void SendEmail(string address, string subject, string message)
         {

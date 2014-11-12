@@ -1,0 +1,51 @@
+﻿@using CarRentalWebClient.CarRentalServiceReference;
+
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    
+}
+
+@using (Html.BeginForm("Review", "Comment", FormMethod.Post, new { id = "main", name = "main" }))
+{
+
+
+    <div><br /></div>
+    <div style=" width:500px; float:left; text-align: left; color:blue;">Hi! @Session["email"]&nbsp;</div><br />
+    
+    <div style=" width:100px; float:left; text-align: left; color:blue;">CarModel &nbsp;</div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.DropDownList("Model_Id", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <br />
+    <div style=" width:100px; float:left; text-align: left; color:blue;">Stars &nbsp;</div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+          <select id="star" name="star">
+             
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+          </select>
+        </div>
+    </div>
+
+    <br />
+    <div style=" width:100px; float:left; text-align: left; color:blue;">Comment &nbsp;</div>
+    <textarea id="comment" name="comment" style="color:black" rows="10" cols="64"></textarea><br />
+    <div style=" width:100px; float:left; text-align: left;">&nbsp;<br /></div>
+    <input type="submit" style="align-items:center; text-align: center" value="Submit" />
+
+    <div><p align="center" style="color:red;"><a href="">@ViewBag.Error</a></p> </div>
+
+   
+}

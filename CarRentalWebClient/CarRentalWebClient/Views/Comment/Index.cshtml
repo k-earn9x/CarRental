@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+   
+        
+        @using (Html.BeginForm("Index", "Comment", FormMethod.Post, new { id = "main", name = "main" }))
+        {
+                <div><br /></div>
+                <div style=" width:100px; float:left; text-align: left;">Enter Email&nbsp;</div>
+                <input type="text" name="email" id="email" size="50" maxlength="100" />
+
+                <br />
+
+
+                <div style=" width:100px; float:left; text-align: left;">&nbsp;<br /></div>
+                <input type="submit" style="align-items:center; text-align: center" value="Submit" />
+      
+            <div><p align="center" style="color:red;"><a href="">@ViewBag.Error</a></p> </div>
+            
+
+        }
+
+  
+    
+
+</div>
+
+
+

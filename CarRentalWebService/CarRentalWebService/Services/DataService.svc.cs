@@ -23,6 +23,7 @@ namespace CarRentalWebService.Services
             // TODO: set rules to indicate which entity sets and service operations are visible, updatable, etc.
             // Examples:
             config.SetEntitySetAccessRule("*", EntitySetRights.AllRead);
+            config.SetEntitySetAccessRule("Reviews", EntitySetRights.All);
             config.SetServiceOperationAccessRule("*", ServiceOperationRights.All);
             config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V3;
         }
