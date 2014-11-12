@@ -14,13 +14,13 @@ namespace CarRentalWebService.Controllers
     {
         private DbContextModel db = new DbContextModel();
 
-        // GET: Users
+        // tạo view hiển thị tất cả các admin có quyền đăng nhập vào hệ thống
         public ActionResult Index()
         {
             return View(db.Users.ToList());
         }
 
-        // GET: Users/Details/5
+        // tạo view hiển thị thông tin 1 user admin được chọn
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,15 +35,13 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
+        // view tạo thêm một user admin
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //hàm thêm 1 user admin vào database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,userName,password,email")] User user)
@@ -58,7 +56,7 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // GET: Users/Edit/5
+        // view hiển thị thông tin 1 admin cần sửa
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,9 +71,7 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // hàm sửa và cập nhật thông tin 1 admin được chọn
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,userName,password,email")] User user)
@@ -89,7 +85,7 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // GET: Users/Delete/5
+        // view hiển thị thông tin 1 admin được chọn để xoá
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +100,7 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // POST: Users/Delete/5
+        // hàm xoá 1 admin và cập nhật lại database
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

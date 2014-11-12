@@ -105,7 +105,7 @@ namespace CarRentalWebService.Controllers
                 chuoi += "\n Mật khẩu: " + pwd + " ";
 
                 string mail = "Chào Email: " + Email + chuoi;
-                SendEmail(Email, "Books Shop", mail);
+                SendEmail(Email, "Car Store", mail);
 
                 return RedirectToAction("DangNhap", "DangNhap");
             }

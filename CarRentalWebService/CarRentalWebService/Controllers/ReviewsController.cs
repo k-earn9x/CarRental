@@ -14,14 +14,14 @@ namespace CarRentalWebService.Controllers
     {
         private DbContextModel db = new DbContextModel();
 
-        // GET: Reviews
+        // tạo View Index hiển thị tất cả các reviews của khách hàng
         public ActionResult Index()
         {
             var reviews = db.Reviews.Include(r => r.Model);
             return View(reviews.ToList());
         }
 
-        // GET: Reviews/Details/5
+        //tạo view Detail hiển thị 1 review của khách hàng
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,16 +36,14 @@ namespace CarRentalWebService.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Create
+        // tạo view tạo 1 review 
         public ActionResult Create()
         {
             ViewBag.Model_Id = new SelectList(db.CarModels, "Id", "Name");
             return View();
         }
 
-        // POST: Reviews/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // add 1 review vào database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Model_Id,Content,Stars,email")] Review review)
@@ -61,7 +59,7 @@ namespace CarRentalWebService.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Edit/5
+        // tạo view sửa 1 review được chọn
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,9 +75,7 @@ namespace CarRentalWebService.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // hàm cập nhật 1 review đã chọn
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Model_Id,Content,Stars,email")] Review review)
@@ -94,7 +90,7 @@ namespace CarRentalWebService.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Delete/5
+        // tạo view xoá 1 review được chọn
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,7 +105,7 @@ namespace CarRentalWebService.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Delete/5
+        // hàm xoá 1 review được chọn và cập nhật lại database
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
