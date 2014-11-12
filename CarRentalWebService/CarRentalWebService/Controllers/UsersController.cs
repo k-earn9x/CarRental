@@ -14,13 +14,13 @@ namespace CarRentalWebService.Controllers
     {
         private DbContextModel db = new DbContextModel();
 
-        // tạo view hiển thị tất cả các admin có quyền đăng nhập vào hệ thống
+        // GET: Users
         public ActionResult Index()
         {
             return View(db.Users.ToList());
         }
 
-        // tạo view hiển thị thông tin 1 user admin được chọn
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,16 +35,18 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // view tạo thêm một user admin
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        //hàm thêm 1 user admin vào database
+        // POST: Users/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,userName,password,email")] User user)
+        public ActionResult Create([Bind(Include = "Id,Name,userName,password,email,Admin")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +58,7 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // view hiển thị thông tin 1 admin cần sửa
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -71,10 +73,12 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // hàm sửa và cập nhật thông tin 1 admin được chọn
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,userName,password,email")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Name,userName,password,email,Admin")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +89,7 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // view hiển thị thông tin 1 admin được chọn để xoá
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -100,7 +104,7 @@ namespace CarRentalWebService.Controllers
             return View(user);
         }
 
-        // hàm xoá 1 admin và cập nhật lại database
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

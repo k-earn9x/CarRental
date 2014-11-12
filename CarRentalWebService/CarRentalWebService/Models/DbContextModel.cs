@@ -112,9 +112,9 @@
             //base.Seed(context);
             var users = new List<User>
             {
-                new User{Name="Nguyen Hoang Nam", userName="hoangnam", password="462617", email="hoangnam19922010@gmail.com"},
-                new User{Name="Vo Hoang Dang Khoa", userName="dangkhoa", password="123456", email="hoangnam19922010@gmail.com"},
-                new User{Name="Ho Phuoc Loi", userName="phuocloi", password="123456", email="hoangnam19922010@gmail.com"}
+                new User{Name="Nguyen Hoang Nam", userName="hoangnam", password="462617", email="hoangnam19922010@gmail.com", Admin=true},
+                new User{Name="Vo Hoang Dang Khoa", userName="dangkhoa", password="123456", email="hoangnam19922010@gmail.com", Admin=true},
+                new User{Name="Ho Phuoc Loi", userName="phuocloi", password="123456", email="hoangnam19922010@gmail.com", Admin=false}
             };
             users.ForEach(u => context.Users.Add(u));
             context.SaveChanges();

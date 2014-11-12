@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using CarRentalWebService.Models;
-using System.Web.Security;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
 
-namespace CarRentalWebService.Controllers
+
+namespace CarRentalWebClient.Controllers
 {
-    public class DangNhapController : Controller
+    public class LoginController : SiteController
     {
         // GET: DangNhap
         // CHỨC NĂNG ĐĂNG NHẬP
-        DbContextModel db = new DbContextModel();
-        public ActionResult DangNhap()
+      
+        public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult DangNhap(FormCollection f, string returnUrl)
+        public ActionResult Login(FormCollection f, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                using (DbContextModel entities = new DbContextModel())
-                {
+                
                     string username = f["username"];
                     string password = f["txtpass"];
                     string _remember = f["remember"];
@@ -38,7 +37,7 @@ namespace CarRentalWebService.Controllers
                     {
                         remember = true;
                     }
-                    var kh = (from t in entities.Users where t.userName == username && t.password == password select t).ToList();
+                    var kh = (from t in Db.Users where t.userName == username && t.password == password select t).ToList();
 
                     bool userValid = kh.Any();
                     //bool userValid = entities.KhachHangs.Any(user => user.TenDangNhap == username && user.MatKhau == password);
@@ -47,7 +46,7 @@ namespace CarRentalWebService.Controllers
                     {
                         foreach (var a in kh)
                         {
-                            if (a.Admin == true)
+                            if (a.Admin == false)
                             {
                                 Session["Account"] = username;
                                 FormsAuthentication.SetAuthCookie(username, remember);
@@ -60,32 +59,32 @@ namespace CarRentalWebService.Controllers
                                 else
                                 {
                                     //ViewBag.Err = "<script language=javascript>alert('Sai thông tin đăng nhập!');</script>";                          
-                                    return RedirectToAction("Index", "DashBoard");
+                                    return RedirectToAction("Index", "Home");
                                 }
                             }
                         }
 
-                       
+
 
                     }
                     else
                     {
 
-                        return RedirectToAction("Index", "DashBoard");
+                        return RedirectToAction("Index", "Home");
 
                     }
 
 
 
                 }
-            }
+            
             return View(f);
         }
         public ActionResult LogOff()
         {
             Session["Account"] = null;
             FormsAuthentication.SignOut();
-            return RedirectToAction("DangNhap", "DangNhap");
+            return RedirectToAction("Index", "Home");
         }
         //CHỨC NĂNG QUÊN MẬT KHẨU
         public ActionResult ForgotPassword()
@@ -98,14 +97,22 @@ namespace CarRentalWebService.Controllers
             string Email = f["email"];
             try
             {
-                var usr = (from kh in db.Users where (kh.email == Email) select kh).ToList();
+                var usr = (from kh in Db.Users where (kh.email == Email) select kh).ToList();
                 string pwd = "";
                 string usrname = "";
                 string chuoi = "";
-                foreach (User k in usr)
+                foreach (CarRentalServiceReference.User k in usr)
                 {
-                    pwd = k.password;
-                    usrname = k.userName;
+                    if (k.Admin == false)
+                    {
+                        pwd = k.password;
+                        usrname = k.userName;
+                    }
+                    else
+                    {
+                        ViewBag.Error1 = "<script language=javascript>alert('Xin lỗi Email này tại trong dữ liệu!');</script>";
+                    }
+                   
                 }
 
                 chuoi += "Tên đăng nhập:" + usrname + " ";
@@ -114,16 +121,16 @@ namespace CarRentalWebService.Controllers
                 string mail = "Chào Email: " + Email + chuoi;
                 SendEmail(Email, "Car Store", mail);
 
-                return RedirectToAction("DangNhap", "DangNhap");
+                return RedirectToAction("Login", "Login");
             }
             catch
             {
-                
+
                 ViewBag.Error = "<script language=javascript>alert('Nhập lại mật khẩu');</script>";
-                return RedirectToAction("ForgotPassword", "DangNhap");
+                return RedirectToAction("ForgotPassword", "Login");
             }
             //KhachHang usr = db.KhachHangs.SingleOrDefault(u => u.Email == Email);
-           
+
         }
         public void SendEmail(string address, string subject, string message)
         {
@@ -144,72 +151,6 @@ namespace CarRentalWebService.Controllers
             smtpClient.UseDefaultCredentials = false;
             smtpClient.Credentials = loginInfo;
             smtpClient.Send(msg);
-        }
-        // CHỨC NĂNG ĐĂNG KÝ
-        [HttpGet]
-        public ActionResult FormRegister()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult FormRegister(FormCollection f)
-        {
-            string pass = f["pass"];
-            string pass2 = f["pass2"];
-
-            User usr = new User();
-
-
-
-            usr.userName = f["name"];
-            usr.password = f["pass"];
-            usr.Name = f["name2"];
-            usr.email = f["email"];
-
-
-            if (ModelState.IsValid)
-            {
-                using (DbContextModel entities = new DbContextModel())
-                {
-                    string name = f["name"];
-                    bool userInValid = entities.Users.Any(user => user.userName == name);
-                    if (userInValid && f["name"] != null)
-                    {
-
-                        ViewBag.Error = "<script language=javascript>alert('Đăng kí không thành công Tên đăng nhập bị trùng');</script>";
-
-
-
-
-                        //ViewBag.Mess = "Tên đăng nhập đã tồn tại!";
-                    }
-
-                    else if (pass != pass2 && pass2 != null && pass != null)
-                    {
-                        ViewBag.ErrorPass = "<script language=javascript>alert('Mật khẩu không trùng khớp');</script>";
-                    }
-
-
-                    else if (f["agree"] == null)
-                    {
-                        ViewBag.ErrorAgree = "<script language=javascript>alert('Bạn chưa đồng ý với điều kiện của chúng tôi!');</script>";
-                    }
-                    else
-                    {
-
-
-                        //ViewBag.success = "<script language=javascript>alert('Đăng kí thành công!');</script>";
-                        //db.KhachHangs.AddObject(usr);
-                        entities.Users.Add(usr);
-                        entities.SaveChanges();
-                        return RedirectToAction("DangNhap", "DangNhap");
-
-                    }
-                }
-
-            }
-
-            return View(usr);
         }
     }
 }
