@@ -21,14 +21,14 @@ namespace CarRentalWebService.Controllers
                 new SelectListItem {Value = "1", Text = "Paid"}
             };
 
-        // GET: Requests
+        //xuất danh sách các requests
         public ActionResult Index()
         {
             var requests = db.Requests.Include(r => r.City).Include(r => r.Model);
             return View(requests.ToList());
         }
 
-        // GET: Requests/Details/5
+        // hiển thị thông tin của request được chọn
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -43,7 +43,7 @@ namespace CarRentalWebService.Controllers
             return View(request);
         }
 
-        // GET: Requests/Create
+        // hiển thị thông tin lên View Tạo một Requset
         public ActionResult Create()
         {
             ViewBag.State = new SelectList(states,"Value", "Text");
@@ -52,9 +52,7 @@ namespace CarRentalWebService.Controllers
             return View();
         }
 
-        // POST: Requests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // tạo một request và cập nhật vào database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Email,Phone,FromDate,ToDate,PriceTotal,State,Model_Id,City_Id")] Request request)
@@ -72,7 +70,7 @@ namespace CarRentalWebService.Controllers
             return View(request);
         }
 
-        // GET: Requests/Edit/5
+        // hiển thị View Sửa 1 request
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -91,9 +89,7 @@ namespace CarRentalWebService.Controllers
             return View(request);
         }
 
-        // POST: Requests/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // hàm edit cập nhật 1 request xuống database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Email,Phone,FromDate,ToDate,PriceTotal,State,Model_Id,City_Id")] Request request)
@@ -110,7 +106,7 @@ namespace CarRentalWebService.Controllers
             return View(request);
         }
 
-        // GET: Requests/Delete/5
+        // hiển thị View Xoá 1 request
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,7 +121,7 @@ namespace CarRentalWebService.Controllers
             return View(request);
         }
 
-        // POST: Requests/Delete/5
+        // chức năng xoá 1 request đã chọn và cập nhật lại database
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

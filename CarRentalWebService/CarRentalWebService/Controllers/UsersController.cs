@@ -10,108 +10,107 @@ using CarRentalWebService.Models;
 
 namespace CarRentalWebService.Controllers
 {
-    public class ReviewsController : Controller
+    public class UsersController : Controller
     {
         private DbContextModel db = new DbContextModel();
 
-        // tạo View Index hiển thị tất cả các reviews của khách hàng
+        // GET: Users
         public ActionResult Index()
         {
-            var reviews = db.Reviews.Include(r => r.Model);
-            return View(reviews.ToList());
+            return View(db.Users.ToList());
         }
 
-        //tạo view Detail hiển thị 1 review của khách hàng
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(user);
         }
 
-        // tạo view tạo 1 review 
+        // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.Model_Id = new SelectList(db.CarModels, "Id", "Name");
             return View();
         }
 
-        // add 1 review vào database
+        // POST: Users/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Model_Id,Content,Stars,email")] Review review)
+        public ActionResult Create([Bind(Include = "Id,Name,userName,password,email,Admin")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Reviews.Add(review);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Model_Id = new SelectList(db.CarModels, "Id", "Name", review.Model_Id);
-            return View(review);
+            return View(user);
         }
 
-        // tạo view sửa 1 review được chọn
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Model_Id = new SelectList(db.CarModels, "Id", "Name", review.Model_Id);
-            return View(review);
+            return View(user);
         }
 
-        // hàm cập nhật 1 review đã chọn
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Model_Id,Content,Stars,email")] Review review)
+        public ActionResult Edit([Bind(Include = "Id,Name,userName,password,email,Admin")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(review).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Model_Id = new SelectList(db.CarModels, "Id", "Name", review.Model_Id);
-            return View(review);
+            return View(user);
         }
 
-        // tạo view xoá 1 review được chọn
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(user);
         }
 
-        // hàm xoá 1 review được chọn và cập nhật lại database
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Review review = db.Reviews.Find(id);
-            db.Reviews.Remove(review);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

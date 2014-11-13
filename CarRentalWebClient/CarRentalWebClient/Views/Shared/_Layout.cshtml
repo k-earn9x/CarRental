@@ -20,10 +20,24 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-                    <li>@Html.ActionLink("Giới thiệu", "About", "Home")</li>
-                    <li>@Html.ActionLink("Liên hệ", "Contact", "Home")</li>
-                </ul>
+    @if (Session["Account"] != null)
+                    {
+        @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+        <li>@Html.ActionLink("Giới thiệu", "About", "Home")</li>
+        <li>@Html.ActionLink("Liên hệ", "Contact", "Home")</li>
+        <li>@Html.ActionLink("Đánh giá", "Index", "Comment")</li>
+        <li><span style="color:#d8d2d2; align-items:flex-end">Đơn hàng</span></li>
+        <li><span style="color:#d8d2d2; align-items:flex-end">@Html.ActionLink("Log Out", "LogOff", "Login")</span></li>
+        }
+        else
+        {
+        @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+        <li>@Html.ActionLink("Giới thiệu", "About", "Home")</li>
+        <li>@Html.ActionLink("Liên hệ", "Contact", "Home")</li>
+        <li>@Html.ActionLink("Đánh giá", "Index", "Comment")</li>
+        <li><span style="color:#d8d2d2; align-items:flex-end">@Html.ActionLink("Login", "Login", "Login")</span></li>
+        }
+    </ul>
             </div>
         </div>
     </div>

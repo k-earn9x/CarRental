@@ -21,27 +21,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @*@Html.ActionLink("Login","DangNhap", "DangNhap")*@
-
+                @Html.ActionLink("VN Car Rental", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Dash Board", "Index", "DashBoard")</li>*@
                     @if (Session["Account"] != null)
                     {
-
-                        <li>@Html.ActionLink("Dash Board", "Index", "DashBoard")</li>
-                        <li>@Html.ActionLink("Car Brand", "Index", "CarBrands")</li>
-                        <li>@Html.ActionLink("Car Model", "Index", "CarModels")</li>
-                        <li>@Html.ActionLink("City", "Index", "Cities")</li>
-                        <li>@Html.ActionLink("Review", "Index", "Reviews")</li>
-                        <li>@Html.ActionLink("Request", "Index", "Requests")</li>
-                        <li>@Html.ActionLink("User", "Index", "Users")</li>
-                        @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
-                        <li><span style="color:#d8d2d2; align-items:flex-end">@Html.ActionLink("Log Out", "LogOff", "DangNhap")</span></li>
+                        @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                        <li>@Html.ActionLink("Giới thiệu", "About", "Home")</li>
+                        <li>@Html.ActionLink("Liên hệ", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Đánh giá", "Index", "Comment")</li>
+                         <li><span style="color:#d8d2d2; align-items:flex-end">@Html.ActionLink("Log Out", "LogOff", "Login")</span></li>
+                    }
+                    else
+                    {
+                        @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                        <li>@Html.ActionLink("Giới thiệu", "About", "Home")</li>
+                        <li>@Html.ActionLink("Liên hệ", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Đánh giá", "Index", "Comment")</li>
                     }
                     
-
                 </ul>
             </div>
         </div>
@@ -61,7 +60,7 @@
 
 
                         <div style=" width:50px; float:left; text-align: left;">&nbsp;<br /></div>
-                        @using (Html.BeginForm("LogOff", "DangNhap"))
+                        @using (Html.BeginForm("LogOff", "Login"))
                         {
                             <div><input type="button" style="text-align:center" name="dangxuat" value="Đăng xuất" onclick="goToLogOut();" /></div>
                         }
@@ -73,7 +72,7 @@
                 {
                     <div><p align="center" style="color:red;">LOG IN</p></div>
                     <div>
-                        @using (Html.BeginForm("DangNhap", "DangNhap", FormMethod.Post, new { id = "Formdn", name = "Formdn", onSubmit = "return CheckDangNhap();" }))
+                        @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { id = "Formdn", name = "Formdn", onSubmit = "return CheckDangNhap();" }))
                         {
                             <div style="padding: 0px 0px 0px 465px;">
                                 <div style=" width:100px; float:left; text-align: left;">Username&nbsp;</div>
@@ -90,9 +89,9 @@
                                 <input type="submit" style="align-items:center; text-align: center" value="Login" />
                             </div>
                             <div><p align="center"><a href="">@ViewBag.ThongBao</a></p> </div>
-                             <div><hr color="336699" size="1" /></div>
-                            <div><p align="center" style="color:blue;"><a href="/DangNhap/ForgotPassword">Forgot Password</a></p> </div>
-                            
+                            <div><hr color="336699" size="1" /></div>
+                            <div><p align="center" style="color:blue;"><a href="/Login/ForgotPassword">Forgot Password</a></p> </div>
+
                         }
 
                     </div>
@@ -100,7 +99,7 @@
             </div>
         </div>
     </div>
-    
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @*@RenderSection("scripts", required: false)*@
