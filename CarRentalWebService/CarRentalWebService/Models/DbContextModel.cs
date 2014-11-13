@@ -35,6 +35,7 @@
         public virtual DbSet<Review> Reviews { get; set; }
 
         public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 
     public class Initializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<DbContextModel>
@@ -109,6 +110,14 @@
             Features.ForEach(f => context.CarFeatures.Add(f));
             context.SaveChanges();
             //base.Seed(context);
+            var users = new List<User>
+            {
+                new User{Name="Nguyen Hoang Nam", userName="hoangnam", password="462617", email="hoangnam19922010@gmail.com"},
+                new User{Name="Vo Hoang Dang Khoa", userName="dangkhoa", password="123456", email="hoangnam19922010@gmail.com"},
+                new User{Name="Ho Phuoc Loi", userName="phuocloi", password="123456", email="hoangnam19922010@gmail.com"}
+            };
+            users.ForEach(u => context.Users.Add(u));
+            context.SaveChanges();
         }
     }
 

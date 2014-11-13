@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*<link href="~/Content/style.css" rel="stylesheet" />*@
+    <title>DangNhap</title>
+</head>
+<body>
+    <div>
+
+        <div>
+            @if (Session["Accout"] != null)
+            {
+                Session["Account"] = @Html.Encode(User.Identity.Name);
+                <div>THÀNH VIÊN</div>
+                <div>
+
+                    <p align="center" style="color:#FF0000"><b>  <strong>Xin chào @Html.Encode(User.Identity.Name)</strong> </b><br /></p>
+
+
+                    <div style=" width:50px; float:left; text-align: left;">&nbsp;<br /></div>
+                    @using (Html.BeginForm("LogOff", "DangNhap"))
+                    {
+                        <div><input type="button" style="text-align:center" name="dangxuat" value="Đăng xuất" onclick="goToLogOut();" /></div>
+                    }
+                    <div><p align="center"><a href="/User/EditUser">Sửa thông tin cá nhân</a></p> </div>
+
+                </div>
+            }
+            else
+            {
+                <div><p align="center" style="color:red;">ĐĂNG NHẬP</p></div>
+                <div>
+                    @using (Html.BeginForm("DangNhap", "DangNhap", FormMethod.Post, new { id = "Formdn", name = "Formdn", onSubmit = "return CheckDangNhap();" }))
+                    {
+                        <div style="padding: 0px 0px 0px 665px;">
+                            <div style=" width:100px; float:left; text-align: left;">Tên truy nhập&nbsp;</div>
+                            <input type="text" name="username" id="username" size="10" maxlength="35" onchange="CheckTendn();" />
+
+                            <br />
+                            <div style=" width:100px; float:left; text-align: left;">Mật khẩu&nbsp;</div>
+                            <input type="password" name="txtpass" id="txtpass" size="10" value="" /><br />
+                            <div style=" width:100px; float:left; text-align: left;">Ghi nhớ&nbsp;</div>
+                            <input id="remember" class="checkbox" type="checkbox" checked="checked" value="1" name="remember" /><br />
+                            <span id="tendn" style="color:#FF0000"></span>
+
+                            <div style=" width:100px; float:left; text-align: left;">&nbsp;<br /></div>
+                            <input type="submit" style="align-items:center; text-align: center" value="Đăng nhập" />
+                        </div>
+                        <div><p align="center"><a href="">@ViewBag.ThongBao</a></p> </div>
+                        <div><p align="center" style="color:blue;"><a href="/DangNhap/ForgotPassword">Quên mật khẩu</a></p> </div>
+                        <div><p align="center" style="color:blue;"> <a href="/DangNhap/FormRegister">Đăng kí thành viên</a></p></div>
+                    }
+
+                </div>
+            }
+        </div>
+    </div>
+
+</body>
+</html>

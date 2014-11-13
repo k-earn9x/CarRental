@@ -16,23 +16,47 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Car Rental", "Index", "DashBoard", new { area = "" }, new { @class = "navbar-brand" })
+                @*@Html.ActionLink("Login","DangNhap", "DangNhap")*@
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Dash Board", "Index", "DashBoard")</li>*@
-                    <li>@Html.ActionLink("Car Brand", "Index", "CarBrands")</li>
-                    <li>@Html.ActionLink("Car Model", "Index", "CarModels")</li>
-                    <li>@Html.ActionLink("City", "Index", "Cities")</li>
-                    <li>@Html.ActionLink("Review", "Index", "Reviews")</li>
-                    <li>@Html.ActionLink("Request", "Index", "Requests")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
+                    @if (Session["Account"] != null)
+                    {
+
+                        <li>@Html.ActionLink("Dash Board", "Index", "DashBoard")</li>
+                        <li>@Html.ActionLink("Car Brand", "Index", "CarBrands")</li>
+                        <li>@Html.ActionLink("Car Model", "Index", "CarModels")</li>
+                        <li>@Html.ActionLink("City", "Index", "Cities")</li>
+                        <li>@Html.ActionLink("Review", "Index", "Reviews")</li>
+                        <li>@Html.ActionLink("Request", "Index", "Requests")</li>
+                        <li>@Html.ActionLink("User", "Index", "Users")</li>
+                        @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
+                        <li><span style="color:#d8d2d2; align-items:flex-end">@Html.ActionLink("Log Out", "LogOff", "DangNhap")</span></li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "DangNhap", "DangNhap")</li>
+
+                    }
+
                 </ul>
             </div>
         </div>
     </div>
+
     <div class="container body-content">
-        @RenderBody()
+        @if (Session["Account"] != null)
+        {
+            @RenderBody()
+        }
+        else
+        {
+            //Response.Write("<script language='JavaScript'> alert('Bạn phải đăng nhập!'); </script>");
+
+            @Html.ActionLink("Login", "DangNhap", "DangNhap")
+        }
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>

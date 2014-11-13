@@ -149,6 +149,7 @@
     <Compile Include="Controllers\CarFeaturesController.cs" />
     <Compile Include="Controllers\CarModelsController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\DangNhapController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\DbContextModel.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Review.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.svc.cs">
       <DependentUpon>DataService.svc</DependentUpon>
@@ -237,6 +239,9 @@
     <Content Include="Views\Requests\Details.cshtml" />
     <Content Include="Views\Requests\Edit.cshtml" />
     <Content Include="Views\Requests\Index.cshtml" />
+    <Content Include="Views\DangNhap\DangNhap.cshtml" />
+    <Content Include="Views\DangNhap\ForgotPassword.cshtml" />
+    <Content Include="Views\DangNhap\FormRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

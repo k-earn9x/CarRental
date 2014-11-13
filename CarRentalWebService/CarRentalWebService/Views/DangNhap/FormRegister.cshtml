@@ -1,0 +1,124 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <title>FormRegister</title>
+</head>
+<body>
+    <div class="body-content">
+        <div class="main">
+            <div class="columright">
+                <div class="header-center">ĐĂNG KÍ THÀNH VIÊN</div>
+                <div style="width:580px">
+
+                    <div class="noidunggiua">
+                        @using (Html.BeginForm("FormRegister", "DangNhap", FormMethod.Post, new { id = "mainForm", name = "mainForm", onSubmit = "return Check();" }))
+                        {
+                            <div class="noidunggiua">
+                                <label for="name"><span class=" form_label">Tên truy nhập</span></label>
+                                @if (ViewBag.ThongTinUsr != null)
+                                {
+                                    <input id="name" name="name" size="35" value="@ViewBag.ThongTinUsr.TenDangNhap" onchange="Checkname();" />
+                                }
+                                else
+                                {
+                                    <input id="name" name="name" size="35" onchange="Checkname();" />
+                                }
+
+                                @*@Html.Raw(ViewBag.Error)*@
+                                <span id="sao" style="color:#FF0000">@Html.Raw(ViewBag.Error)</span>
+                            </div>
+                            <div class="noidunggiua">
+                                <label for="pass"><span class=" form_label">Mật khẩu</span></label>
+
+                                <input type="password" id="pass" name="pass" size="35" maxlength="30" onchange="pass6kitu();" />
+
+                                <span id="mk" style="color:#FF0000"></span>
+                            </div>
+                            <div class="noidunggiua">
+                                <label for="pass2"><span class=" form_label">Xác nhận lại mật khẩu</span></label>
+
+
+                                <input type="password" id="pass2" name="pass2" size="35" maxlength="30" onchange="checkpass();" />
+
+                                <span id="mk2" style="color:#FF0000">@Html.Raw(ViewBag.ErrorPass) @ViewBag.ErrorThieuPass</span>
+                            </div>
+
+                            <div class="noidunggiua">
+                                <label for="name2"><span class="form_label">Họ và tên</span></label>
+                                @if (ViewBag.ThongTinUsr != null)
+                                {
+
+                                    <input id="name2" name="name2" value="@ViewBag.ThongTinUsr.HoTen" size="35" onchange="Checkhoten();" />
+                                }
+                                else
+                                {
+                                    <input value="" id="name2" name="name2" size="35" onchange="Checkhoten();" />
+                                }
+                                <span id="sao2" style="color:#FF0000">@Html.Raw(ViewBag.Errorname2)</span>
+                            </div>
+
+
+                            <div class="noidunggiua">
+                                <label for="email"><span class="form_label">Email</span></label>
+                                @if (ViewBag.ThongTinUsr != null)
+                                {
+                                    <input value="@ViewBag.ThongTinUsr.Email" id="email" name="email" size="35" onchange="checkEmail();" />
+                                }
+                                else
+                                {
+                                    <input value="" id="email" name="email" size="35" onchange="checkEmail();" />
+                                }
+                                <span id="thu" style="color:#FF0000">@Html.Raw(ViewBag.Erroremail)</span>
+                            </div>
+
+
+                            <div class="noidunggiua">
+                                <textarea id="comments" rows="8" cols="64">
+                                    ĐIỀU KHOẢN SỬ DỤNG WEBSITE
+
+
+                                    Trách nhiệm của người sử dụng:
+
+                                    -  Chịu trách nhiệm về những thông tin cá nhân cung cấp cho trang web khi bạn đăng ký sử dụng dịch vụ.
+                                    -  Chịu trách nhiệm bảo vệ mật khẩu truy cập, và trách nhiệm của việc đăng nhập bằng mật khẩu của bạn, do hoặc không do bạn trực tiếp đăng nhập.
+                                    -  Không được gây trở ngại, hạn chế cho việc sử dụng Dịch vụ của người dùng khác.
+                                </textarea>
+
+                            </div>
+                            <div class="noidunggiua" style="color:#000066">
+                                <input type="checkbox" id="agree" name="agree" onclick="checkagree(this);" /> Tôi đã đọc, hiểu, chấp nhận và tuân thủ những điều khoản này!
+                                <br /><span id="dongy" style="color:#FF0000">@Html.Raw(ViewBag.ErrorAgree)</span>
+                                <br />
+                            </div>
+                            <div class="noidunggiua">
+                                <label for=""><span class="form_label">&nbsp;</span></label>
+
+                                <input type="submit" name="dangky" value="Đăng ký" />
+                                <input type="reset" name="clear" value="Xóa trắng" />
+                            </div>
+                            <div class=" noidunggiua">
+                                <label for=""><span class="form_label">&nbsp;</span></label>
+                                <div class="noidunggiua"><hr color="336699" size="1" /></div>
+                                <div class="buttonhome"><a href="/DangNhap">Về lại Đăng nhập</a></div>
+                            </div>
+                        }
+
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
